@@ -25,7 +25,7 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6">
             <Link
-              href="/"
+              href="/#products"
               className="flex items-center gap-1.5 text-sm font-medium text-dark-1 hover:text-luxe-purple transition-colors"
             >
               <ShoppingBag className="w-4 h-4" />
@@ -64,20 +64,20 @@ export default function Navbar() {
           <div className="md:hidden py-4 border-t border-purple-100 animate-fade-in">
             <div className="flex flex-col gap-3">
               <Link
-                href="/"
+                href="/#products"
                 className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-dark-1 hover:bg-purple-50 hover:text-luxe-purple transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
                 <ShoppingBag className="w-4 h-4" />
                 Products
               </Link>
-              <Link
-                href="/"
-                className="btn-primary text-sm text-center"
-                onClick={() => setMenuOpen(false)}
-              >
-                Reserve Now
-              </Link>
+            <Link
+              href="/#products"
+              className="btn-primary text-sm text-center"
+              onClick={() => setMenuOpen(false)}
+            >
+              Reserve Now
+            </Link>
             </div>
           </div>
         )}

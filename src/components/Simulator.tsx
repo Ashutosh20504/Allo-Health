@@ -39,7 +39,7 @@ export default function Simulator({ products, onRefreshData }: SimulatorProps) {
     total: number
   } | null>(null)
 
-  const consoleEndRef = useRef<HTMLDivElement>(null)
+  const consoleContainerRef = useRef<HTMLDivElement>(null)
 
   // Get active product and warehouse details
   const selectedProduct = products.find((p) => p.id === selectedProductId)
@@ -67,10 +67,12 @@ export default function Simulator({ products, onRefreshData }: SimulatorProps) {
     }
   };
 
-  // Auto scroll console
+  // Scroll only inside the console panel — never the whole page
   useEffect(() => {
-    if (consoleEndRef.current) {
-      consoleEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    if (logs.length === 0) return
+    const container = consoleContainerRef.current
+    if (container) {
+      container.scrollTop = container.scrollHeight
     }
   }, [logs])
 
@@ -402,7 +404,10 @@ export default function Simulator({ products, onRefreshData }: SimulatorProps) {
           </div>
 
           {/* Logs Output */}
-          <div className="flex-1 overflow-y-auto py-3 space-y-1.5 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent">
+          <div
+            ref={consoleContainerRef}
+            className="flex-1 overflow-y-auto py-3 space-y-1.5 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent"
+          >
             {logs.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-1.5 font-sans">
                 <Terminal className="w-8 h-8 opacity-20" />
@@ -424,7 +429,6 @@ export default function Simulator({ products, onRefreshData }: SimulatorProps) {
                 )
               })
             )}
-            <div ref={consoleEndRef} />
           </div>
 
           {/* Summary Box */}

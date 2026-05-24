@@ -135,7 +135,7 @@ export default async function HomePage() {
       )}
 
       {/* Products Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <section id="products" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 scroll-mt-20">
         <div className="flex items-end justify-between mb-8">
           <div>
             <div className="flex items-center gap-2 text-sm font-semibold text-luxe-purple mb-2">

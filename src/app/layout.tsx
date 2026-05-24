@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Toaster } from 'sonner'
 import Navbar from '@/components/Navbar'
+import ScrollToTop from '@/components/ScrollToTop'
 
 export const metadata: Metadata = {
   title: 'Allo Inventory — Reserve Products Instantly',
@@ -31,6 +32,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-warm-bg">
+        <ScrollToTop />
         <Navbar />
         <main>{children}</main>
         <Toaster
