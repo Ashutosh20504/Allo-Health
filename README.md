@@ -39,7 +39,7 @@ cp .env.example .env
 | `REDIS_URL` | Upstash Console → Create Database → REST URL |
 | `CRON_SECRET` | Any random string |
 
-> ⚠️ **Important:** If your password contains special characters like `[`, `@`, `]`, URL-encode them:
+>  **Important:** If your password contains special characters like `[`, `@`, `]`, URL-encode them:
 > - `[` → `%5B`
 > - `@` → `%40`  
 > - `]` → `%5D`
@@ -119,10 +119,10 @@ This allows clients to safely retry failed requests without double-charging or d
 
 ### Vercel Cron Expiry
 
-`vercel.json` schedules `/api/cron/expire-reservations` every minute:
+`vercel.json` schedules `/api/cron/expire-reservations` once per day (midnight UTC). Vercel **Hobby** plans only allow daily cron jobs — not every minute.
 
 ```json
-{ "crons": [{ "path": "/api/cron/expire-reservations", "schedule": "* * * * *" }] }
+{ "crons": [{ "path": "/api/cron/expire-reservations", "schedule": "0 0 * * *" }] }
 ```
 
 On each run:
@@ -161,7 +161,7 @@ curl -H "Authorization: Bearer allo-cron-secret-2024-secure" \
 | `SELECT FOR UPDATE` | Simple and correct; can cause lock contention at very high concurrency | Use advisory locks or an optimistic locking strategy with retry |
 | Redis idempotency | Fast; Redis eviction could lose keys | DB-backed `IdempotencyKey` table as durable fallback |
 | 10-minute window | Balances UX vs stock hold cost | Make it configurable per product category |
-| Vercel cron (1-min min) | Expired stock may be held up to 1 min extra | Use pg_cron for sub-minute precision in production |
+| Vercel cron (daily on Hobby) | Expired stock may be held until the next daily run | Upgrade to Pro for frequent crons, or use Supabase pg_cron / an external scheduler |
 | No auth | Out of scope | Add NextAuth.js session-based reservations tied to users |
 | No payment integration | Simplified checkout | Integrate Stripe with webhook to confirm on payment success |
 | In-memory DB connection pooling | Works with PgBouncer (transaction mode) | Fine-tune pool settings for production load |
